@@ -1,0 +1,3 @@
+- 👋 Hi, I’m @alynichelle
+- 🌱 I’m currently learning General Education
+- 📫 How to reach me @AlyNichelle on all Social Media
