@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Payment Information</h2>
+<form method="post" class="glassy">
+    <label>Name: <input type="text" name="name" required></label><br>
+    <label>Email: <input type="email" name="email" required></label><br>
+    <label>Card Number: <input type="text" name="card_number" required></label><br>
+    <label>Expiration (MM/YY): <input type="text" name="expiration" required></label><br>
+    <button type="submit">Save Card on File</button>
+</form>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Client Portal</h2>
+<table class="glassy">
+    <tr><th>Name</th><th>Email</th><th>Notes</th><th>Update</th></tr>
+    {% for client in clients %}
+    <tr>
+        <td>{{ client.name }}</td>
+        <td>{{ client.email }}</td>
+        <td>{{ client.notes or '' }}</td>
+        <td>
+            <form action="{{ url_for('update_notes', client_id=client.id) }}" method="post">
+                <textarea name="notes" rows="2">{{ client.notes or '' }}</textarea>
+                <button type="submit">Save</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

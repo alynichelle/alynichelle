@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Schedule Appointment</h2>
+<form method="post" class="glassy">
+    <label>Name: <input type="text" name="name" required></label><br>
+    <label>Email: <input type="email" name="email" required></label><br>
+    <label>Lash Style:
+        <select name="style">
+            <option value="classic">Classic</option>
+            <option value="hybrid">Hybrid</option>
+            <option value="volume">Volume</option>
+            <option value="mega volume">Mega Volume</option>
+        </select>
+    </label><br>
+    <label>Date and Time: <input type="datetime-local" name="date" required></label><br>
+    <button type="submit">Request Appointment</button>
+</form>
+{% endblock %}
