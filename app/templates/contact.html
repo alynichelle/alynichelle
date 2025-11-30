@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Messages</h2>
+<form method="post" class="glassy">
+    <label>Name: <input type="text" name="name" required></label><br>
+    <label>Email: <input type="email" name="email" required></label><br>
+    <label>Message:<br>
+        <textarea name="message" rows="4" required></textarea>
+    </label><br>
+    <button type="submit">Send Message</button>
+</form>
+
+<h3>Conversation</h3>
+<div class="glassy">
+    {% for msg in messages %}
+        <p><strong>{{ msg.client.name }}</strong> ({{ msg.timestamp.strftime('%Y-%m-%d %H:%M') }}):<br>
+            {{ msg.content }}</p>
+    {% endfor %}
+</div>
+{% endblock %}

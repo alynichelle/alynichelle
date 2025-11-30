@@ -1,0 +1,46 @@
+body {
+    background: linear-gradient(to bottom, #e6e0f8, #d0cce0);
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+.gothic {
+    font-family: "Cinzel", serif;
+}
+
+nav {
+    background: #444;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.glassy {
+    backdrop-filter: blur(6px);
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background-color: #b19cd9;
+    border: none;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
