@@ -1,11 +1,10 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import Stripe from "stripe";
-import { createClient } from "@supabase/supabase-js";
+import { supabaseServer } from "../lib/supabaseServer";
 
 export const config = { api: { bodyParser: false } };
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2024-06-20" });
-const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
 
 function buffer(req: any) {
   return new Promise<Buffer>((resolve, reject) => {
@@ -32,7 +31,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       // booking_id can come from client_reference_id or metadata
       const bookingId = s.client_reference_id || s.metadata?.booking_id;
       if (bookingId) {
-        await supabase
+        await supabaseServer
           .from("bookings")
           .update({
             deposit_cents: s.amount_total ?? 0,

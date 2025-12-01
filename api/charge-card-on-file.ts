@@ -1,16 +1,14 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import Stripe from "stripe";
-import { createClient } from "@supabase/supabase-js";
+import { supabaseServer } from "../lib/supabaseServer";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2024-06-20" });
-const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     if (req.method !== "POST") return res.status(405).json({ error: "Use POST" });
     const { client_id, amount_cents, reason } = req.body || {};
     if (!client_id || !amount_cents) return res.status(400).json({ error: "client_id & amount_cents required" });
-    const { data: client } = await supabase
+    const { data: client } = await supabaseServer
       .from("clients")
       .select("stripe_customer_id, default_payment_method_id")
       .eq("id", client_id)

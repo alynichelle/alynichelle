@@ -41,6 +41,8 @@ Use the Supabase URL/anon key and Stripe publishable key from your own project; 
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `STRIPE_WEBHOOK_SECRET`
 
+`/api/*` routes instantiate the service client from `lib/supabaseServer.ts`, which reads `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` at runtime. Do not expose the service role key to the client or Expo EAS secrets.
+
 ⚠️ **Rotate any leaked Stripe keys.** Keys that were ever shared publicly should be regenerated in Stripe, then updated in your host and `.env`.
 
 📦 **Codex environment variables** — add the same values in your Project → Settings → Environment so serverless routes (`/api/*`) get the correct Supabase/Stripe keys without hardcoding them.

@@ -1,8 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { createClient } from "@supabase/supabase-js";
+import { supabaseServer } from "../lib/supabaseServer";
 import PDFDocument from "pdfkit";
-
-const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
 
 type PdfInstance = InstanceType<typeof PDFDocument>;
 
@@ -24,15 +22,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const { acceptance_id, upload = true } = req.body || {};
     if (!acceptance_id) return res.status(400).json({ error: "acceptance_id required" });
 
-    const { data: acc } = await supabase
+    const { data: acc } = await supabaseServer
       .from("client_form_acceptances")
       .select("id, created_at, accepted_name, form_version, client_id, form_id")
       .eq("id", acceptance_id)
       .single();
     if (!acc) return res.status(404).json({ error: "Acceptance not found" });
     const [{ data: form }, { data: client }] = await Promise.all([
-      supabase.from("legal_forms").select("title, body_md").eq("id", acc.form_id).single(),
-      supabase.from("clients").select("name,email,phone").eq("id", acc.client_id).single(),
+      supabaseServer.from("legal_forms").select("title, body_md").eq("id", acc.form_id).single(),
+      supabaseServer.from("clients").select("name,email,phone").eq("id", acc.client_id).single(),
     ]);
 
     const pdf = await bufferPDF((doc) => {
@@ -52,11 +50,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     let url: string | undefined;
     if (upload) {
       const path = `${acc.client_id}/signed_form_${acc.id}.pdf`;
-      const { error } = await supabase.storage.from("client-files").upload(path, pdf, { contentType: "application/pdf", upsert: true });
+      const { error } = await supabaseServer.storage.from("client-files").upload(path, pdf, { contentType: "application/pdf", upsert: true });
       if (error) return res.status(500).json({ error: error.message });
-      const { data: signed } = await supabase.storage.from("client-files").createSignedUrl(path, 60 * 60);
+      const { data: signed } = await supabaseServer.storage.from("client-files").createSignedUrl(path, 60 * 60);
       url = signed?.signedUrl;
-      await supabase.from("client_form_acceptances").update({ signature_png_url: url }).eq("id", acc.id);
+      await supabaseServer.from("client_form_acceptances").update({ signature_png_url: url }).eq("id", acc.id);
     }
 
     res.setHeader("Content-Type", "application/pdf");

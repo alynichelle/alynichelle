@@ -1,10 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { createClient } from '@supabase/supabase-js';
 import ical from 'ical';
 import fetch from 'node-fetch';
 import dayjs from 'dayjs';
-
-const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+import { supabaseServer } from '../lib/supabaseServer';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
@@ -12,7 +10,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const { calendar_source_id } = req.body || {};
     if (!calendar_source_id) return res.status(400).json({ error: 'calendar_source_id required' });
 
-    const { data: src } = await supabase.from('calendar_sources').select('*').eq('id', calendar_source_id).single();
+    const { data: src } = await supabaseServer.from('calendar_sources').select('*').eq('id', calendar_source_id).single();
     if (!src?.is_active) return res.status(400).json({ error: 'calendar source inactive or missing' });
     if (!src.ics_url) return res.status(400).json({ error: 'ics_url required for this source' });
 
@@ -38,7 +36,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const now = dayjs();
     const horizon = now.add(60, 'day');
 
-    await supabase
+    await supabaseServer
       .from('availability_blocks')
       .delete()
       .gte('start_at', now.startOf('day').toISOString())
@@ -49,10 +47,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .filter((b) => dayjs(b.start_at).isBefore(horizon) && dayjs(b.end_at).isAfter(now))
       .map((b) => ({ ...b, is_blocked: true, source: `ics:${src.id}` }));
     if (batch.length) {
-      const { error: insErr } = await supabase.from('availability_blocks').insert(batch);
+      const { error: insErr } = await supabaseServer.from('availability_blocks').insert(batch);
       if (insErr) return res.status(500).json({ error: insErr.message });
     }
-    await supabase.from('calendar_sources').update({ last_synced_at: new Date().toISOString() }).eq('id', src.id);
+    await supabaseServer.from('calendar_sources').update({ last_synced_at: new Date().toISOString() }).eq('id', src.id);
     return res.status(200).json({ imported: batch.length });
   } catch (e: any) {
     return res.status(500).json({ error: e.message });
