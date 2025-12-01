@@ -1,0 +1,38 @@
+{
+  "name": "alyssas-esthetics",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "publish": "expo publish",
+    "eas-update": "eas update",
+    "build": "expo export --platform web"
+  },
+  "dependencies": {
+    "@stripe/stripe-react-native": "^0.40.0",
+    "@supabase/supabase-js": "^2.45.0",
+    "dayjs": "^1.11.11",
+    "expo": "~52.0.0",
+    "expo-router": "~4.0.10",
+    "react": "18.3.1",
+    "react-dom": "^18.3.1",
+    "react-native": "0.76.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.12",
+    "vite": "^5.4.10"
+  }
+}
