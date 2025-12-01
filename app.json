@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "Alyssa's Esthetics",
+    "slug": "alyssas-esthetics",
+    "extra": {
+      "eas": {
+        "projectId": "0c5c8e02-0489-44cb-836a-ea2aab5c0778"
+      },
+      // These are read by lib/supabase.ts via expo-constants.
+      // Values come from .env locally or EAS Secrets in CI.
+      "supabaseUrl": process.env.EXPO_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL,
+      "supabaseAnonKey": process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY,
+      "stripePublishableKey": process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || process.env.STRIPE_PUBLISHABLE_KEY,
+      "apiBaseUrl": process.env.EXPO_PUBLIC_API_BASE_URL
+    },
+    "owner": "alynichelle",
+    "scheme": "alyssas-esthetics",
+    "plugins": ["expo-router", "@stripe/stripe-react-native"],
+    "runtimeVersion": { "policy": "sdkVersion" },
+    "web": { "bundler": "metro" }
+  }
+}
