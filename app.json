@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "YourAppName",
-    "slug": "your-app-slug",
+    "name": "Alyssa's Esthetics",
+    "slug": "alyssas-esthetics",
     "extra": {
       "eas": {
         "projectId": "0c5c8e02-0489-44cb-836a-ea2aab5c0778"
       }
-    }
+    },
+    "owner": "alynichelle"
   }
 }
