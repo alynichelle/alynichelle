@@ -1,0 +1,17 @@
+@import './styles/themes.css';
+
+#root {
+  width: min(980px, 100%);
+}
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: inherit;
+}
+
+* {
+  box-sizing: border-box;
+}

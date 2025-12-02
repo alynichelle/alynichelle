@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM"],
+    "jsx": "react-jsx",
+    "moduleResolution": "Bundler",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "types": ["expo-router", "node"],
+    "skipLibCheck": true
+  },
+  "include": [
+    "app/**/*",
+    "src/**/*",
+    "api/**/*",
+    "services/**/*",
+    "lib/**/*",
+    "supabase/**/*",
+    "index.html"
+  ],
+  "exclude": ["node_modules"]
+}
